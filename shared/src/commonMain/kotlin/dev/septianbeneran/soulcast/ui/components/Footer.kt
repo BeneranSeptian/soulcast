@@ -17,8 +17,7 @@ import compose.icons.fontawesomeicons.brands.Github
 import compose.icons.fontawesomeicons.brands.Instagram
 import compose.icons.fontawesomeicons.brands.Linkedin
 import compose.icons.fontawesomeicons.regular.Envelope
-import dev.septianbeneran.soulcast.ui.theme.NeonGreen
-import dev.septianbeneran.soulcast.ui.theme.TextSecondary
+import dev.septianbeneran.soulcast.ui.theme.TextTertiary
 
 @Composable
 fun Footer() {
@@ -34,12 +33,12 @@ fun Footer() {
             modifier = Modifier
                 .fillMaxWidth(0.1f)
                 .padding(bottom = 32.dp),
-            color = NeonGreen.copy(alpha = 0.3f),
-            thickness = 2.dp
+            color = TextTertiary.copy(alpha = 0.2f),
+            thickness = 1.dp
         )
         
         Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             ContactButton(
                 icon = FontAwesomeIcons.Brands.Github,
@@ -66,10 +65,10 @@ fun Footer() {
         Spacer(modifier = Modifier.height(24.dp))
         
         Text(
-            text = "Built with Compose Multiplatform.",
+            text = "Built with Compose Multiplatform",
             style = MaterialTheme.typography.bodySmall.copy(
-                color = TextSecondary,
-                fontWeight = FontWeight.Medium
+                color = TextTertiary,
+                fontWeight = FontWeight.Normal
             )
         )
     }

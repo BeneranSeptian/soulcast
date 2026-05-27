@@ -14,7 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.septianbeneran.soulcast.ui.components.AnimatedBackground
-import dev.septianbeneran.soulcast.ui.theme.NeonGreen
+import dev.septianbeneran.soulcast.ui.theme.Accent
 import dev.septianbeneran.soulcast.ui.theme.TextPrimary
 import dev.septianbeneran.soulcast.ui.theme.TextSecondary
 
@@ -40,7 +40,7 @@ fun NotFoundScreen() {
                 style = MaterialTheme.typography.displayLarge.copy(
                     fontSize = 120.sp,
                     fontWeight = FontWeight.ExtraBold,
-                    color = NeonGreen,
+                    color = Accent,
                     letterSpacing = 8.sp
                 ),
                 textAlign = TextAlign.Center
@@ -75,8 +75,8 @@ fun NotFoundScreen() {
             Button(
                 onClick = { uriHandler.openUri("/") },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = NeonGreen,
-                    contentColor = Color.Black
+                    containerColor = Accent,
+                    contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.height(56.dp).width(200.dp)

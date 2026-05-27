@@ -2,7 +2,6 @@ package dev.septianbeneran.soulcast.ui.components
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -16,24 +15,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.septianbeneran.soulcast.data.WorkExperience
-import dev.septianbeneran.soulcast.ui.theme.NeonGreen
+import dev.septianbeneran.soulcast.ui.theme.Accent
+import dev.septianbeneran.soulcast.ui.theme.AccentMuted
 import dev.septianbeneran.soulcast.ui.theme.SurfaceDark
+import dev.septianbeneran.soulcast.ui.theme.SurfaceElevated
 import dev.septianbeneran.soulcast.ui.theme.TextPrimary
 import dev.septianbeneran.soulcast.ui.theme.TextSecondary
+import dev.septianbeneran.soulcast.ui.theme.TextTertiary
 
 @Composable
 fun ExperienceItem(exp: WorkExperience, isMobile: Boolean) {
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
     
-    val animatedElevation by animateDpAsState(if (isHovered) 12.dp else 2.dp)
-    val animatedScale by animateFloatAsState(if (isHovered) 1.02f else 1f)
-    val animatedBorderAlpha by animateFloatAsState(if (isHovered) 0.8f else 0.2f)
+    val animatedScale by animateFloatAsState(if (isHovered) 1.01f else 1f)
 
     Row(
         modifier = Modifier
@@ -48,16 +47,16 @@ fun ExperienceItem(exp: WorkExperience, isMobile: Boolean) {
             ) {
                 Box(
                     modifier = Modifier
-                        .size(12.dp)
+                        .size(10.dp)
                         .clip(CircleShape)
-                        .background(if (isHovered) NeonGreen else NeonGreen.copy(alpha = 0.5f))
+                        .background(if (isHovered) Accent else AccentMuted)
                 )
                 Box(
                     modifier = Modifier
-                        .width(2.dp)
+                        .width(1.dp)
                         .fillMaxHeight()
                         .weight(1f)
-                        .background(NeonGreen.copy(alpha = 0.2f))
+                        .background(TextTertiary.copy(alpha = 0.3f))
                 )
             }
             Spacer(modifier = Modifier.width(16.dp))
@@ -65,10 +64,11 @@ fun ExperienceItem(exp: WorkExperience, isMobile: Boolean) {
 
         Card(
             modifier = Modifier.weight(1f),
-            colors = CardDefaults.cardColors(containerColor = SurfaceDark),
-            shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = animatedElevation),
-            border = BorderStroke(1.dp, NeonGreen.copy(alpha = animatedBorderAlpha))
+            colors = CardDefaults.cardColors(
+                containerColor = if (isHovered) SurfaceElevated else SurfaceDark
+            ),
+            shape = RoundedCornerShape(12.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
         ) {
             Column(
                 modifier = Modifier.padding(24.dp)
@@ -81,33 +81,27 @@ fun ExperienceItem(exp: WorkExperience, isMobile: Boolean) {
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = exp.position,
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontWeight = FontWeight.Bold,
-                                color = NeonGreen
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.SemiBold,
+                                color = TextPrimary
                             )
                         )
+                        Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = exp.company,
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                color = TextPrimary,
-                                fontWeight = FontWeight.SemiBold
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                color = TextSecondary
                             )
                         )
                     }
                     if (!isMobile) {
-                        Surface(
-                            color = NeonGreen.copy(alpha = 0.1f),
-                            shape = RoundedCornerShape(8.dp)
-                        ) {
-                            Text(
-                                text = exp.duration,
-                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                                style = MaterialTheme.typography.labelMedium.copy(
-                                    color = NeonGreen,
-                                    fontWeight = FontWeight.Medium
-                                )
+                        Text(
+                            text = exp.duration,
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                color = TextTertiary,
+                                fontWeight = FontWeight.Medium
                             )
-                        }
+                        )
                     }
                 }
                 if (isMobile) {
@@ -115,7 +109,7 @@ fun ExperienceItem(exp: WorkExperience, isMobile: Boolean) {
                     Text(
                         text = exp.duration,
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = TextSecondary,
+                            color = TextTertiary,
                             fontWeight = FontWeight.Medium
                         )
                     )
@@ -123,8 +117,8 @@ fun ExperienceItem(exp: WorkExperience, isMobile: Boolean) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = exp.description,
-                    style = MaterialTheme.typography.bodyLarge.copy(
-                        lineHeight = 26.sp,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        lineHeight = 24.sp,
                         color = TextSecondary
                     )
                 )

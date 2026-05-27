@@ -17,7 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.septianbeneran.soulcast.ui.theme.NeonGreen
+import dev.septianbeneran.soulcast.ui.theme.Accent
+import dev.septianbeneran.soulcast.ui.theme.TextSecondary
 
 @Composable
 fun NavBar(
@@ -31,8 +32,8 @@ fun NavBar(
         modifier = Modifier
             .fillMaxWidth()
             .statusBarsPadding(),
-        color = MaterialTheme.colorScheme.background.copy(alpha = 0.8f),
-        tonalElevation = 4.dp
+        color = MaterialTheme.colorScheme.background.copy(alpha = 0.9f),
+        tonalElevation = 0.dp
     ) {
         Column(
             modifier = Modifier
@@ -48,36 +49,34 @@ fun NavBar(
                     text = "MSN",
                     style = MaterialTheme.typography.headlineSmall.copy(
                         fontWeight = FontWeight.ExtraBold,
-                        color = NeonGreen,
-                        letterSpacing = 2.sp
+                        color = TextSecondary,
+                        letterSpacing = 3.sp
                     )
                 )
 
                 if (isMobile) {
                     IconButton(onClick = { isMenuOpen = !isMenuOpen }) {
-                        Icon(Icons.Default.Menu, contentDescription = "Menu", tint = NeonGreen)
+                        Icon(Icons.Default.Menu, contentDescription = "Menu", tint = TextSecondary)
                     }
                 } else {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(24.dp),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        OutlinedButton(
-                            onClick = onContactClick,
-                            border = BorderStroke(1.dp, NeonGreen),
-                            shape = RoundedCornerShape(8.dp),
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-                        ) {
-                            Text("Contact Me", color = NeonGreen, fontWeight = FontWeight.Bold)
+                        TextButton(onClick = onContactClick) {
+                            Text("Contact", color = TextSecondary, fontWeight = FontWeight.Medium)
                         }
 
                         Button(
                             onClick = onDownloadCVClick,
-                            colors = ButtonDefaults.buttonColors(containerColor = NeonGreen, contentColor = Color.Black),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Accent,
+                                contentColor = Color.White
+                            ),
                             shape = RoundedCornerShape(8.dp),
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+                            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp)
                         ) {
-                            Text("Download CV", fontWeight = FontWeight.Bold)
+                            Text("Download CV", fontWeight = FontWeight.SemiBold)
                         }
                     }
                 }
@@ -93,24 +92,24 @@ fun NavBar(
                         .fillMaxWidth()
                         .padding(top = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Button(
                         onClick = { onDownloadCVClick(); isMenuOpen = false },
                         modifier = Modifier.fillMaxWidth(0.8f),
-                        colors = ButtonDefaults.buttonColors(containerColor = NeonGreen, contentColor = Color.Black),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Accent,
+                            contentColor = Color.White
+                        ),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text("Download CV", fontWeight = FontWeight.Bold)
+                        Text("Download CV", fontWeight = FontWeight.SemiBold)
                     }
 
-                    OutlinedButton(
-                        onClick = { onContactClick(); isMenuOpen = false },
-                        modifier = Modifier.fillMaxWidth(0.8f),
-                        border = BorderStroke(1.dp, NeonGreen),
-                        shape = RoundedCornerShape(8.dp)
+                    TextButton(
+                        onClick = { onContactClick(); isMenuOpen = false }
                     ) {
-                        Text("Contact Me", color = NeonGreen, fontWeight = FontWeight.Bold)
+                        Text("Contact Me", color = TextSecondary)
                     }
                 }
             }

@@ -8,7 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import dev.septianbeneran.soulcast.ui.theme.NeonGreen
+import dev.septianbeneran.soulcast.ui.theme.Accent
+import dev.septianbeneran.soulcast.ui.theme.BackgroundDark
 
 @Composable
 fun AnimatedBackground() {
@@ -18,7 +19,7 @@ fun AnimatedBackground() {
         initialValue = 0f,
         targetValue = 1000f,
         animationSpec = infiniteRepeatable(
-            animation = tween(20000, easing = LinearEasing),
+            animation = tween(30000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
         )
     )
@@ -27,7 +28,7 @@ fun AnimatedBackground() {
         initialValue = 0f,
         targetValue = 1000f,
         animationSpec = infiniteRepeatable(
-            animation = tween(25000, easing = LinearEasing),
+            animation = tween(35000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
         )
     )
@@ -36,25 +37,24 @@ fun AnimatedBackground() {
         val canvasWidth = size.width
         val canvasHeight = size.height
         
-        // Draw some subtle glowing orbs in the background
         drawCircle(
             brush = Brush.radialGradient(
-                colors = listOf(NeonGreen.copy(alpha = 0.05f), Color.Transparent),
+                colors = listOf(Accent.copy(alpha = 0.03f), Color.Transparent),
                 center = Offset(xOffset % canvasWidth, yOffset % canvasHeight),
-                radius = 400f
+                radius = 500f
             ),
             center = Offset(xOffset % canvasWidth, yOffset % canvasHeight),
-            radius = 400f
+            radius = 500f
         )
         
         drawCircle(
             brush = Brush.radialGradient(
-                colors = listOf(NeonGreen.copy(alpha = 0.03f), Color.Transparent),
+                colors = listOf(Accent.copy(alpha = 0.02f), Color.Transparent),
                 center = Offset((canvasWidth - xOffset) % canvasWidth, (canvasHeight - yOffset) % canvasHeight),
-                radius = 600f
+                radius = 700f
             ),
             center = Offset((canvasWidth - xOffset) % canvasWidth, (canvasHeight - yOffset) % canvasHeight),
-            radius = 600f
+            radius = 700f
         )
     }
 }

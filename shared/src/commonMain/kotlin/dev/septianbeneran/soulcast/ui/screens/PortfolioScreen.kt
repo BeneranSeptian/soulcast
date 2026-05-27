@@ -4,6 +4,7 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -19,6 +20,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.septianbeneran.soulcast.data.experiences
 import dev.septianbeneran.soulcast.ui.components.*
+import dev.septianbeneran.soulcast.ui.theme.Accent
+import dev.septianbeneran.soulcast.ui.theme.TextTertiary
 import org.jetbrains.compose.resources.painterResource
 import soulcast.shared.generated.resources.Res
 import soulcast.shared.generated.resources.profile_pic
@@ -34,7 +37,6 @@ fun PortfolioScreen() {
             .background(MaterialTheme.colorScheme.background)
     ) {
         val isMobile = maxWidth < 800.dp
-        val horizontalPadding = if (isMobile) 24.dp else 64.dp
 
         AnimatedBackground()
 
@@ -53,7 +55,7 @@ fun PortfolioScreen() {
             ) {
                 item {
                     SectionWrapper(
-                        modifier = Modifier.padding(top = 64.dp, bottom = 100.dp),
+                        modifier = Modifier.padding(top = 48.dp, bottom = 80.dp),
                         enter = fadeIn(animationSpec = tween(1500))
                     ) {
                         HeroSection(isMobile)
@@ -61,8 +63,14 @@ fun PortfolioScreen() {
                 }
 
                 item {
-                    SectionWrapper(modifier = Modifier.padding(vertical = 100.dp)) {
+                    SectionWrapper(modifier = Modifier.padding(vertical = 80.dp)) {
                         ExperienceSection(isMobile)
+                    }
+                }
+
+                item {
+                    SectionWrapper(modifier = Modifier.padding(bottom = 80.dp)) {
+                        ProjectsSection(isMobile)
                     }
                 }
 
@@ -108,11 +116,12 @@ fun HeroSection(isMobile: Boolean) {
                 painter = painterResource(Res.drawable.profile_pic),
                 contentDescription = "Profile Picture",
                 modifier = Modifier
-                    .size(200.dp)
+                    .size(180.dp)
+                    .border(2.dp, TextTertiary.copy(alpha = 0.2f), CircleShape)
                     .clip(CircleShape),
                 contentScale = ContentScale.Crop
             )
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(40.dp))
             ProfileInfo(
                 isCentered = true,
                 isMobile = isMobile
@@ -136,7 +145,8 @@ fun HeroSection(isMobile: Boolean) {
                     painter = painterResource(Res.drawable.profile_pic),
                     contentDescription = "Profile Picture",
                     modifier = Modifier
-                        .size(380.dp)
+                        .size(340.dp)
+                        .border(2.dp, TextTertiary.copy(alpha = 0.2f), CircleShape)
                         .clip(CircleShape),
                     contentScale = ContentScale.Crop
                 )
@@ -152,16 +162,16 @@ fun ExperienceSection(isMobile: Boolean) {
         horizontalAlignment = if (isMobile) Alignment.CenterHorizontally else Alignment.Start
     ) {
         Text(
-            text = "Professional Experience",
+            text = "Experience",
             style = MaterialTheme.typography.headlineMedium.copy(
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.onBackground
             )
         )
-        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.height(40.dp))
         experiences.forEach { exp ->
             ExperienceItem(exp, isMobile)
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }
