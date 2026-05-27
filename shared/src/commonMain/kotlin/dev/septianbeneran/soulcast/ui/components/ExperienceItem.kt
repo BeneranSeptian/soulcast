@@ -1,7 +1,7 @@
 package dev.septianbeneran.soulcast.ui.components
 
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -19,18 +19,36 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.septianbeneran.soulcast.data.WorkExperience
-import dev.septianbeneran.soulcast.ui.theme.Accent
-import dev.septianbeneran.soulcast.ui.theme.AccentMuted
-import dev.septianbeneran.soulcast.ui.theme.SurfaceDark
-import dev.septianbeneran.soulcast.ui.theme.SurfaceElevated
-import dev.septianbeneran.soulcast.ui.theme.TextPrimary
-import dev.septianbeneran.soulcast.ui.theme.TextSecondary
-import dev.septianbeneran.soulcast.ui.theme.TextTertiary
 
 @Composable
-fun ExperienceItem(exp: WorkExperience, isMobile: Boolean) {
+fun ExperienceTimeline(
+    experiences: List<WorkExperience>,
+    isMobile: Boolean
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        experiences.forEachIndexed { index, exp ->
+            ExperienceItem(
+                exp = exp,
+                isMobile = isMobile,
+                isLast = index == experiences.size - 1
+            )
+        }
+    }
+}
+
+@Composable
+fun ExperienceItem(
+    exp: WorkExperience,
+    isMobile: Boolean,
+    isLast: Boolean = false
+) {
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
+    val primaryColor = MaterialTheme.colorScheme.primary
+    val surfaceColor = MaterialTheme.colorScheme.surface
+    val onSurfaceColor = MaterialTheme.colorScheme.onSurface
     
     val animatedScale by animateFloatAsState(if (isHovered) 1.01f else 1f)
 
@@ -38,40 +56,47 @@ fun ExperienceItem(exp: WorkExperience, isMobile: Boolean) {
         modifier = Modifier
             .fillMaxWidth()
             .hoverable(interactionSource)
-            .scale(animatedScale)
     ) {
         if (!isMobile) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.width(40.dp)
+                modifier = Modifier.width(48.dp)
             ) {
                 Box(
                     modifier = Modifier
-                        .size(10.dp)
+                        .size(12.dp)
                         .clip(CircleShape)
-                        .background(if (isHovered) Accent else AccentMuted)
+                        .background(
+                            if (isHovered) primaryColor
+                            else primaryColor.copy(alpha = 0.4f)
+                        )
                 )
-                Box(
-                    modifier = Modifier
-                        .width(1.dp)
-                        .fillMaxHeight()
-                        .weight(1f)
-                        .background(TextTertiary.copy(alpha = 0.3f))
-                )
+                if (!isLast) {
+                    Box(
+                        modifier = Modifier
+                            .width(2.dp)
+                            .height(160.dp)
+                            .background(primaryColor.copy(alpha = 0.15f))
+                    )
+                }
             }
             Spacer(modifier = Modifier.width(16.dp))
         }
 
         Card(
-            modifier = Modifier.weight(1f),
-            colors = CardDefaults.cardColors(
-                containerColor = if (isHovered) SurfaceElevated else SurfaceDark
-            ),
-            shape = RoundedCornerShape(12.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+            modifier = Modifier
+                .weight(1f)
+                .scale(animatedScale),
+            colors = CardDefaults.cardColors(containerColor = surfaceColor),
+            shape = RoundedCornerShape(8.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+            border = BorderStroke(
+                1.dp,
+                if (isHovered) primaryColor.copy(alpha = 0.3f) else primaryColor.copy(alpha = 0.06f)
+            )
         ) {
             Column(
-                modifier = Modifier.padding(24.dp)
+                modifier = Modifier.padding(20.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -83,46 +108,44 @@ fun ExperienceItem(exp: WorkExperience, isMobile: Boolean) {
                             text = exp.position,
                             style = MaterialTheme.typography.titleMedium.copy(
                                 fontWeight = FontWeight.SemiBold,
-                                color = TextPrimary
+                                color = onSurfaceColor
                             )
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = exp.company,
                             style = MaterialTheme.typography.bodyMedium.copy(
-                                color = TextSecondary
+                                color = primaryColor,
+                                fontWeight = FontWeight.Medium
                             )
                         )
                     }
-                    if (!isMobile) {
+                    Surface(
+                        color = primaryColor.copy(alpha = 0.1f),
+                        shape = RoundedCornerShape(4.dp)
+                    ) {
                         Text(
                             text = exp.duration,
-                            style = MaterialTheme.typography.labelMedium.copy(
-                                color = TextTertiary,
+                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                color = primaryColor,
                                 fontWeight = FontWeight.Medium
                             )
                         )
                     }
                 }
-                if (isMobile) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = exp.duration,
-                        style = MaterialTheme.typography.bodySmall.copy(
-                            color = TextTertiary,
-                            fontWeight = FontWeight.Medium
-                        )
-                    )
-                }
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(12.dp))
                 Text(
                     text = exp.description,
                     style = MaterialTheme.typography.bodyMedium.copy(
-                        lineHeight = 24.sp,
-                        color = TextSecondary
+                        lineHeight = 22.sp,
+                        color = onSurfaceColor.copy(alpha = 0.7f)
                     )
                 )
             }
         }
+    }
+    if (!isLast) {
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }

@@ -8,27 +8,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import dev.septianbeneran.soulcast.ui.theme.Accent
-import dev.septianbeneran.soulcast.ui.theme.BackgroundDark
+import dev.septianbeneran.soulcast.ui.theme.LocalThemeState
 
 @Composable
 fun AnimatedBackground() {
+    val themeColors = LocalThemeState.current.colors
     val infiniteTransition = rememberInfiniteTransition()
-    
-    val xOffset by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 1000f,
+
+    val glowPulse by infiniteTransition.animateFloat(
+        initialValue = 0.3f,
+        targetValue = 0.6f,
         animationSpec = infiniteRepeatable(
-            animation = tween(30000, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse
-        )
-    )
-    
-    val yOffset by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 1000f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(35000, easing = LinearEasing),
+            animation = tween(6000, easing = FastOutSlowInEasing),
             repeatMode = RepeatMode.Reverse
         )
     )
@@ -36,25 +27,20 @@ fun AnimatedBackground() {
     Canvas(modifier = Modifier.fillMaxSize()) {
         val canvasWidth = size.width
         val canvasHeight = size.height
-        
+
+        drawRect(color = Color(0xFF0D0B0E))
+
         drawCircle(
             brush = Brush.radialGradient(
-                colors = listOf(Accent.copy(alpha = 0.03f), Color.Transparent),
-                center = Offset(xOffset % canvasWidth, yOffset % canvasHeight),
-                radius = 500f
+                colors = listOf(
+                    themeColors.glow.copy(alpha = 0.03f * glowPulse),
+                    Color.Transparent
+                ),
+                center = Offset(canvasWidth * 0.5f, canvasHeight * 1.1f),
+                radius = canvasHeight * 0.8f
             ),
-            center = Offset(xOffset % canvasWidth, yOffset % canvasHeight),
-            radius = 500f
-        )
-        
-        drawCircle(
-            brush = Brush.radialGradient(
-                colors = listOf(Accent.copy(alpha = 0.02f), Color.Transparent),
-                center = Offset((canvasWidth - xOffset) % canvasWidth, (canvasHeight - yOffset) % canvasHeight),
-                radius = 700f
-            ),
-            center = Offset((canvasWidth - xOffset) % canvasWidth, (canvasHeight - yOffset) % canvasHeight),
-            radius = 700f
+            center = Offset(canvasWidth * 0.5f, canvasHeight * 1.1f),
+            radius = canvasHeight * 0.8f
         )
     }
 }

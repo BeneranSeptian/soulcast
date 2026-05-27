@@ -1,5 +1,6 @@
 package dev.septianbeneran.soulcast.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
@@ -14,13 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import dev.septianbeneran.soulcast.data.Project
-import dev.septianbeneran.soulcast.ui.theme.Accent
-import dev.septianbeneran.soulcast.ui.theme.SurfaceDark
-import dev.septianbeneran.soulcast.ui.theme.SurfaceElevated
-import dev.septianbeneran.soulcast.ui.theme.TextPrimary
-import dev.septianbeneran.soulcast.ui.theme.TextSecondary
-import dev.septianbeneran.soulcast.ui.theme.TextTertiary
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.brands.Github
@@ -30,16 +26,21 @@ fun ProjectItem(project: Project, isMobile: Boolean) {
     val uriHandler = LocalUriHandler.current
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
+    val primaryColor = MaterialTheme.colorScheme.primary
+    val surfaceColor = MaterialTheme.colorScheme.surface
+    val onSurfaceColor = MaterialTheme.colorScheme.onSurface
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .hoverable(interactionSource),
-        colors = CardDefaults.cardColors(
-            containerColor = if (isHovered) SurfaceElevated else SurfaceDark
-        ),
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+        colors = CardDefaults.cardColors(containerColor = surfaceColor),
+        shape = RoundedCornerShape(4.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        border = BorderStroke(
+            1.dp,
+            if (isHovered) primaryColor.copy(alpha = 0.25f) else primaryColor.copy(alpha = 0.06f)
+        )
     ) {
         Column(modifier = Modifier.padding(24.dp)) {
             Row(
@@ -51,7 +52,7 @@ fun ProjectItem(project: Project, isMobile: Boolean) {
                     text = project.name,
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.SemiBold,
-                        color = TextPrimary
+                        color = onSurfaceColor
                     )
                 )
 
@@ -65,7 +66,7 @@ fun ProjectItem(project: Project, isMobile: Boolean) {
                                 imageVector = FontAwesomeIcons.Brands.Github,
                                 contentDescription = "GitHub",
                                 modifier = Modifier.size(18.dp),
-                                tint = if (isHovered) TextSecondary else TextTertiary
+                                tint = if (isHovered) primaryColor else onSurfaceColor.copy(alpha = 0.4f)
                             )
                         }
                     }
@@ -78,7 +79,7 @@ fun ProjectItem(project: Project, isMobile: Boolean) {
                                 imageVector = Icons.AutoMirrored.Filled.OpenInNew,
                                 contentDescription = "Live Demo",
                                 modifier = Modifier.size(18.dp),
-                                tint = if (isHovered) TextSecondary else TextTertiary
+                                tint = if (isHovered) primaryColor else onSurfaceColor.copy(alpha = 0.4f)
                             )
                         }
                     }
@@ -90,7 +91,7 @@ fun ProjectItem(project: Project, isMobile: Boolean) {
             Text(
                 text = project.description,
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    color = TextSecondary
+                    color = onSurfaceColor.copy(alpha = 0.7f)
                 )
             )
 
@@ -102,14 +103,16 @@ fun ProjectItem(project: Project, isMobile: Boolean) {
             ) {
                 project.techStack.forEach { tech ->
                     Surface(
-                        color = Accent.copy(alpha = 0.08f),
-                        shape = RoundedCornerShape(4.dp)
+                        color = primaryColor.copy(alpha = 0.06f),
+                        shape = RoundedCornerShape(2.dp),
+                        border = BorderStroke(1.dp, primaryColor.copy(alpha = 0.1f))
                     ) {
                         Text(
                             text = tech,
                             style = MaterialTheme.typography.labelSmall.copy(
-                                color = Accent,
-                                fontWeight = FontWeight.Medium
+                                color = primaryColor.copy(alpha = 0.7f),
+                                fontWeight = FontWeight.Medium,
+                                letterSpacing = 0.5.sp
                             ),
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                         )

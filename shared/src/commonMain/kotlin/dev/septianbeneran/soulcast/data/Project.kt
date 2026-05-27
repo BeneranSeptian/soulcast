@@ -10,26 +10,38 @@ data class Project(
 
 val projects = listOf(
     Project(
-        name = "Wondr by BNI",
+        name = "wondr by BNI",
         description = "A comprehensive digital banking app featuring QRIS payments, bill settlements, multi-currency transfers, and investment tracking. Built with a modular architecture supporting millions of active users.",
-        techStack = listOf("Kotlin", "Jetpack Compose", "Hilt", "Retrofit", "Room"),
-        liveUrl = "https://play.google.com/store/apps/details?id=id.co.bni.wondr"
+        techStack = listOf("Kotlin", "Jetpack Compose", "Hilt", "Retrofit", "Coroutines", "Multi Module", "Multi Repo"),
+        liveUrl = "https://play.google.com/store/apps/details?id=id.bni.wondr"
     ),
     Project(
         name = "SmartCourier",
         description = "Logistics and delivery management app with real-time GPS tracking, route optimization, and proof-of-delivery capture. Integrated with Google Maps API for efficient fleet management.",
-        techStack = listOf("React Native", "Google Maps", "Firebase", "TypeScript"),
-        githubUrl = "https://github.com/BeneranSeptian"
+        techStack = listOf("React Native", "Typescript", "Javascript", "Google Maps", "Firebase"),
+        liveUrl = "https://play.google.com/store/apps/details?id=com.smartcourier"
     ),
     Project(
-        name = "Soulcast",
-        description = "A Kotlin Multiplatform portfolio template showcasing Compose Multiplatform for web. Features responsive design, smooth animations, and a clean dark theme.",
-        techStack = listOf("Kotlin", "Compose Multiplatform", "KMP"),
-        githubUrl = "https://github.com/BeneranSeptian/Soulcast"
+        name = "MiRecruit",
+        description = "Recruitment platform for Manulife agents available on Android and iOS. Used by recruiters to onboard and manage prospective insurance agents with streamlined application and tracking workflows.",
+        techStack = listOf("React Native", "Typescript", "Javascript", "Android", "iOS", "Firebase"),
+        liveUrl = "https://play.google.com/store/apps/details?id=com.manulife"
+    ),
+    Project(
+        name = "RMS (Record Management System)",
+        description = "Internal warehouse management app used by staff to organize and track document boxes on CipherLab devices. Developed custom libraries to integrate RFID and barcode scanner functionality directly into the hardware workflow.",
+        techStack = listOf("React Native","Typescript", "Android SDK", "RFID", "Barcode Scanner", "CipherLab")
     ),
     Project(
         name = "Agen Pegadaian Syariah",
         description = "Mobile companion app for Pegadaian Syariah agents to manage transactions, customer data, and inventory. Integrated with MoEngage for push notification campaigns.",
-        techStack = listOf("Kotlin", "Android SDK", "MoEngage", "Firebase")
+        techStack = listOf("Java", "Android SDK", "MoEngage"),
+        liveUrl = "https://play.google.com/store/apps/details?id=co.pegadaian.syariah.agen"
+    ),
+    Project(
+        name = "Soulcast",
+        description = "A Kotlin Multiplatform portfolio template showcasing Compose Multiplatform for web. Features responsive design, smooth animations, and a clean dark theme. You are looking at it!",
+        techStack = listOf("Kotlin", "Compose Multiplatform", "KMP"),
+        githubUrl = "https://github.com/BeneranSeptian/Soulcast"
     )
 )

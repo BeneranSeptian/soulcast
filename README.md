@@ -1,27 +1,87 @@
-This is a Kotlin Multiplatform project targeting Web.
+# Soulcast — Developer Portfolio
 
-* [/shared](./shared/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./shared/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./shared/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./shared/src/jvmMain/kotlin)
-    folder is the appropriate location.
+A personal portfolio website built with **Kotlin Multiplatform** and **Compose Multiplatform**, compiled to WebAssembly (Wasm) and JavaScript for the browser.
 
-### Running the apps
+**Live:** [beneranseptian.github.io](https://beneranseptian.github.io/)
 
-Use the run configurations provided by the run widget in your IDE's toolbar. You can also use these commands and options:
+## Features
 
-- Web app:
-  - Wasm target (faster, modern browsers): `./gradlew :webApp:wasmJsBrowserDevelopmentRun`
-  - JS target (slower, supports older browsers): `./gradlew :webApp:jsBrowserDevelopmentRun`
+- Single-page layout with smooth scroll navigation
+- Responsive design (desktop & mobile)
+- Theme color randomizer with 8 preset palettes
+- Animated ambient background
+- Experience timeline with progression line
+- Project showcase with tech stack tags
+- Dark theme with warm brass/amber accents
 
----
+## Tech Stack
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+| Layer | Technology |
+|-------|-----------|
+| Language | Kotlin 2.3 |
+| UI Framework | Compose Multiplatform 1.11 |
+| Design System | Material 3 |
+| Target | Kotlin/Wasm + Kotlin/JS |
+| Build | Gradle (Kotlin DSL) |
 
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
+## Project Structure
+
+```
+Soulcast/
+├── shared/                    # Shared KMP module
+│   └── src/commonMain/
+│       ├── kotlin/.../
+│       │   ├── App.kt             # Root composable & navigation
+│       │   ├── Platform.kt        # Platform expect/actual
+│       │   ├── data/              # Data models (Project, WorkExperience)
+│       │   └── ui/
+│       │       ├── components/    # Reusable composables
+│       │       ├── screens/       # Page content composables
+│       │       └── theme/         # Color palette & theme
+│       └── composeResources/      # Images & resources
+├── webApp/                    # Web application module
+│   └── src/webMain/resources/
+│       ├── index.html             # SEO meta tags & structured data
+│       └── styles.css             # Base styles
+└── gradle/
+    └── libs.versions.toml         # Version catalog
+```
+
+## Running Locally
+
+**Wasm target** (recommended, modern browsers):
+```bash
+./gradlew :webApp:wasmJsBrowserDevelopmentRun
+```
+
+**JS target** (fallback, older browser support):
+```bash
+./gradlew :webApp:jsBrowserDevelopmentRun
+```
+
+## Customization
+
+### Change theme palettes
+
+Edit `Theme.kt` — modify the `themePalettes` list with your own `ThemeColors` entries:
+
+```kotlin
+val themePalettes = listOf(
+    ThemeColors(primary = Color(0xFFC4956A), glow = Color(0xFFE8B86D), secondary = Color(0xFFB87333)),
+    // add more...
+)
+```
+
+### Add project screenshots
+
+Place images in `shared/src/commonMain/composeResources/drawable/` and reference them in `Project.kt`.
+
+### Update content
+
+- **Experience:** Edit `data/WorkExperience.kt`
+- **Projects:** Edit `data/Project.kt`
+- **Bio & skills:** Edit `ui/screens/HomeScreen.kt` and `ui/components/TechStackSection.kt`
+
+## License
+
+MIT
