@@ -30,6 +30,6 @@ jobs:
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: webApp/build/dist/wasmJsMain/productionExecutable
+          path: webApp/build/dist/wasmJs/productionExecutable
 
       - uses: actions/deploy-pages@v5
