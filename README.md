@@ -2,8 +2,6 @@
 
 A personal portfolio website built with **Kotlin Multiplatform** and **Compose Multiplatform**, compiled to WebAssembly (Wasm) and JavaScript for the browser.
 
-**Live:** [beneranseptian.github.io](https://beneranseptian.github.io/)
-
 ## Features
 
 - Single-page layout with smooth scroll navigation
