@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import dev.septianbeneran.soulcast.ui.components.AnimatedBackground
+import dev.septianbeneran.soulcast.ui.components.ContactSection
 import dev.septianbeneran.soulcast.ui.components.ExperienceTimeline
+import dev.septianbeneran.soulcast.ui.components.FadeInSection
 import dev.septianbeneran.soulcast.ui.components.Footer
 import dev.septianbeneran.soulcast.ui.components.NavBar
 import dev.septianbeneran.soulcast.ui.components.ProjectItem
@@ -82,49 +84,92 @@ fun App() {
                     }
 
                     item(key = "experience") {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = if (isMobile) 24.dp else 64.dp),
-                            contentAlignment = Alignment.TopCenter
-                        ) {
-                            Column(
-                                modifier = Modifier.widthIn(max = 800.dp).padding(vertical = 48.dp),
-                                horizontalAlignment = if (isMobile) Alignment.CenterHorizontally else Alignment.Start
+                        FadeInSection(index = 1) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = if (isMobile) 24.dp else 64.dp),
+                                contentAlignment = Alignment.TopCenter
                             ) {
-                                SectionHeader(title = "Experience")
-                                Spacer(modifier = Modifier.height(32.dp))
-                                ExperienceTimeline(
-                                    experiences = experiences,
-                                    isMobile = isMobile
-                                )
+                                Column(
+                                    modifier = Modifier.widthIn(max = 800.dp).padding(vertical = 48.dp),
+                                    horizontalAlignment = if (isMobile) Alignment.CenterHorizontally else Alignment.Start
+                                ) {
+                                    SectionHeader(title = "Experience")
+                                    Spacer(modifier = Modifier.height(32.dp))
+                                    ExperienceTimeline(
+                                        experiences = experiences,
+                                        isMobile = isMobile
+                                    )
+                                }
                             }
                         }
                     }
 
                     item(key = "projects") {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = if (isMobile) 24.dp else 64.dp),
-                            contentAlignment = Alignment.TopCenter
-                        ) {
-                            Column(
-                                modifier = Modifier.widthIn(max = 800.dp).padding(vertical = 48.dp),
-                                horizontalAlignment = if (isMobile) Alignment.CenterHorizontally else Alignment.Start
+                        FadeInSection(index = 2) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = if (isMobile) 24.dp else 64.dp),
+                                contentAlignment = Alignment.TopCenter
                             ) {
-                                SectionHeader(title = "Projects")
-                                Spacer(modifier = Modifier.height(32.dp))
-                                projects.forEach { project ->
-                                    ProjectItem(project, isMobile)
-                                    Spacer(modifier = Modifier.height(16.dp))
+                                Column(
+                                    modifier = Modifier.widthIn(max = 960.dp).padding(vertical = 48.dp)
+                                ) {
+                                    SectionHeader(title = "Projects")
+                                    Spacer(modifier = Modifier.height(32.dp))
+                                    val chunkSize = if (isMobile) 1 else 2
+                                    var projectIndex = 0
+                                    projects.chunked(chunkSize).forEach { chunk ->
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(IntrinsicSize.Min),
+                                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                                        ) {
+                                            chunk.forEach { project ->
+                                                ProjectItem(
+                                                    project = project,
+                                                    index = projectIndex,
+                                                    isMobile = isMobile,
+                                                    modifier = Modifier.weight(1f)
+                                                )
+                                                projectIndex++
+                                            }
+                                            if (chunk.size < chunkSize) {
+                                                Spacer(modifier = Modifier.weight(1f))
+                                            }
+                                        }
+                                        Spacer(modifier = Modifier.height(16.dp))
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item(key = "contact") {
+                        FadeInSection(index = 3) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = if (isMobile) 24.dp else 64.dp),
+                                contentAlignment = Alignment.TopCenter
+                            ) {
+                                Column(
+                                    modifier = Modifier.widthIn(max = 600.dp).padding(vertical = 48.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    ContactSection()
                                 }
                             }
                         }
                     }
 
                     item(key = "footer") {
-                        Footer()
+                        FadeInSection(index = 4) {
+                            Footer()
+                        }
                     }
                 }
             }

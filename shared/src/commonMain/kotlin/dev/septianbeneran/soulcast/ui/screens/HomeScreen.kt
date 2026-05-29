@@ -78,7 +78,7 @@ fun HomeContent(isMobile: Boolean) {
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            TechStackSection(isMobile = true)
+            TechStackSection()
         }
     }
 }
